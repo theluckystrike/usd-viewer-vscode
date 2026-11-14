@@ -1,0 +1,17 @@
+body { color: var(--vscode-foreground); background: var(--vscode-editor-background); font-family: var(--vscode-font-family); font-size: var(--vscode-font-size); margin: 0; padding: 0 12px 12px; }
+#toolbar { display: flex; align-items: center; gap: 12px; padding: 6px 0; border-bottom: 1px solid var(--vscode-panel-border, transparent); margin-bottom: 8px; flex-wrap: wrap; }
+#actions { display: inline-flex; gap: 6px; }
+.tb { background: var(--vscode-button-secondaryBackground, transparent); color: var(--vscode-button-secondaryForeground, inherit); border: 1px solid var(--vscode-button-border, var(--vscode-panel-border, transparent)); padding: 2px 8px; cursor: pointer; font: inherit; border-radius: 2px; }
+.muted { color: var(--vscode-descriptionForeground); }
+.warn { color: var(--vscode-editorWarning-foreground, #cca700); }
+.err { color: var(--vscode-errorForeground, #f48771); }
+.ok { color: var(--vscode-testing-iconPassed, #73c991); }
+h3 { font-size: 13px; margin: 14px 0 6px; }
+code { font-family: var(--vscode-editor-font-family, monospace); font-size: 12px; }
+table.kv { border-collapse: collapse; margin: 6px 0 12px; }
+table.kv th { text-align: left; font-weight: normal; color: var(--vscode-descriptionForeground); padding: 2px 12px 2px 0; }
+table.grid { border-collapse: collapse; width: 100%; font-size: 12px; }
+table.grid th, table.grid td { text-align: left; padding: 3px 8px; border-bottom: 1px solid var(--vscode-panel-border, rgba(128,128,128,.25)); vertical-align: top; word-break: break-word; }
+table.grid th { position: sticky; top: 0; background: var(--vscode-editor-background); }
+#filter { width: 320px; max-width: 100%; background: var(--vscode-input-background); color: var(--vscode-input-foreground); border: 1px solid var(--vscode-input-border, transparent); padding: 3px 6px; }
+#footer { margin-top: 16px; }

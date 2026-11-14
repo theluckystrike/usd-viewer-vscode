@@ -1,0 +1,26 @@
+{
+  "name": "USDA",
+  "scopeName": "source.usda",
+  "patterns": [
+    { "include": "#comment" },
+    { "include": "#string" },
+    { "include": "#asset" },
+    { "include": "#path" },
+    { "match": "\\b(def|over|class|variantSet|variantSets|rel|custom|uniform|varying|config|prepend|append|add|delete|reorder|references|payload|inherits|specializes|subLayers|variants|nameChildren|properties|dictionary)\\b", "name": "keyword.other.usda" },
+    { "match": "\\b(None|true|false|inf|nan)\\b", "name": "constant.language.usda" },
+    { "match": "\\b(bool|uchar|int|uint|int64|uint64|half|float|double|timecode|string|token|asset|opaque|group|pathExpression|matrix[234]d|frame4d|quat[hfd]|(?:int|half|float|double)[234]|(?:point|normal|vector|color)3[hfd]|color4[hfd]|texCoord[23][hfd])(\\[\\])?(?=\\s)", "name": "storage.type.usda" },
+    { "match": "-?(?:\\d+\\.?\\d*|\\.\\d+)(?:[eE][+-]?\\d+)?", "name": "constant.numeric.usda" },
+    { "match": "\\.(connect|timeSamples|spline)\\b", "name": "keyword.operator.usda" }
+  ],
+  "repository": {
+    "comment": { "patterns": [ { "match": "#.*$", "name": "comment.line.number-sign.usda" }, { "match": "//.*$", "name": "comment.line.double-slash.usda" }, { "begin": "/\\*", "end": "\\*/", "name": "comment.block.usda" } ] },
+    "string": { "patterns": [
+      { "begin": "\"\"\"", "end": "\"\"\"", "name": "string.quoted.triple.usda" },
+      { "begin": "'''", "end": "'''", "name": "string.quoted.triple.usda" },
+      { "begin": "\"", "end": "\"", "name": "string.quoted.double.usda", "patterns": [ { "match": "\\\\.", "name": "constant.character.escape.usda" } ] },
+      { "begin": "'", "end": "'", "name": "string.quoted.single.usda", "patterns": [ { "match": "\\\\.", "name": "constant.character.escape.usda" } ] }
+    ] },
+    "asset": { "patterns": [ { "match": "@@@.*?@@@|@[^@\\n]*@", "name": "string.other.link.asset.usda" } ] },
+    "path": { "patterns": [ { "match": "<[^>\\n]*>", "name": "entity.name.tag.path.usda" } ] }
+  }
+}

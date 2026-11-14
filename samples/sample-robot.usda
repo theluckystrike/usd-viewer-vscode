@@ -1,0 +1,164 @@
+#usda 1.0
+(
+    defaultPrim = "Robot"
+    doc = "Sample scene for USD Viewer by Zovo: shapes, a mesh, materials, a variant set and a reference to sample-parts.usda."
+    metersPerUnit = 0.01
+    upAxis = "Y"
+)
+
+def Xform "Robot" (
+    kind = "assembly"
+    variants = {
+        string paint = "orange"
+    }
+    prepend variantSets = "paint"
+)
+{
+    def Mesh "Plate" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        float3[] extent = [(-20, 0, -20), (20, 1, 20)]
+        int[] faceVertexCounts = [8, 4, 4, 4, 4, 4, 4, 4, 4]
+        int[] faceVertexIndices = [0, 1, 2, 3, 4, 5, 6, 7, 0, 8, 9, 1, 1, 9, 10, 2, 2, 10, 11, 3, 3, 11, 12, 4, 4, 12, 13, 5, 5, 13, 14, 6, 6, 14, 15, 7, 7, 15, 8, 0]
+        rel material:binding = </Robot/Looks/Steel>
+        point3f[] points = [(20, 1, 0), (14.142136, 1, 14.142136), (0, 1, 20), (-14.142136, 1, 14.142136), (-20, 1, 0), (-14.142136, 1, -14.142136), (0, 1, -20), (14.142136, 1, -14.142136), (20, 0, 0), (14.142136, 0, 14.142136), (0, 0, 20), (-14.142136, 0, 14.142136), (-20, 0, 0), (-14.142136, 0, -14.142136), (0, 0, -20), (14.142136, 0, -14.142136)]
+        uniform token subdivisionScheme = "none"
+    }
+
+    def Cylinder "Base" (
+        prepend apiSchemas = ["MaterialBindingAPI"]
+    )
+    {
+        uniform token axis = "Y"
+        double height = 4
+        rel material:binding = </Robot/Looks/Dark>
+        double radius = 11
+        double3 xformOp:translate = (0, 3, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate"]
+    }
+
+    def Xform "Arm"
+    {
+        float3 xformOp:rotateXYZ = (0, 30, -25)
+        double3 xformOp:translate = (0, 5, 0)
+        uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateXYZ"]
+
+        def Sphere "Shoulder"
+        {
+            double radius = 5
+        }
+
+        def Cube "UpperArm"
+        {
+            double size = 1
+            double3 xformOp:translate = (0, 16, 0)
+            float3 xformOp:scale = (5, 30, 5)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+        }
+
+        def Xform "Elbow"
+        {
+            float xformOp:rotateZ = 70
+            double3 xformOp:translate = (0, 32, 0)
+            uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:rotateZ"]
+
+            def Sphere "Joint"
+            {
+                double radius = 4
+            }
+
+            def Cube "Forearm"
+            {
+                double size = 1
+                double3 xformOp:translate = (0, 12, 0)
+                float3 xformOp:scale = (4, 24, 4)
+                uniform token[] xformOpOrder = ["xformOp:translate", "xformOp:scale"]
+            }
+
+            def Xform "Gripper" (
+                prepend references = @./sample-parts.usda@</Gripper>
+            )
+            {
+                double3 xformOp:translate = (0, 25, 0)
+                uniform token[] xformOpOrder = ["xformOp:translate"]
+            }
+        }
+    }
+
+    def Scope "Looks"
+    {
+        def Material "Orange"
+        {
+            token outputs:surface.connect = </Robot/Looks/Orange/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.95, 0.45, 0.08)
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "Blue"
+        {
+            token outputs:surface.connect = </Robot/Looks/Blue/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.1, 0.4, 0.95)
+                float inputs:roughness = 0.4
+                token outputs:surface
+            }
+        }
+
+        def Material "Steel"
+        {
+            token outputs:surface.connect = </Robot/Looks/Steel/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.62, 0.64, 0.68)
+                float inputs:metallic = 1
+                token outputs:surface
+            }
+        }
+
+        def Material "Dark"
+        {
+            token outputs:surface.connect = </Robot/Looks/Dark/Surface.outputs:surface>
+
+            def Shader "Surface"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                color3f inputs:diffuseColor = (0.16, 0.17, 0.2)
+                token outputs:surface
+            }
+        }
+    }
+
+    variantSet "paint" = {
+        "blue" {
+            over "Arm" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Robot/Looks/Blue>
+            }
+
+        }
+        "orange" {
+            over "Arm" (
+                prepend apiSchemas = ["MaterialBindingAPI"]
+            )
+            {
+                rel material:binding = </Robot/Looks/Orange>
+            }
+
+        }
+    }
+}
+

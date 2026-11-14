@@ -1,0 +1,364 @@
+{
+  "name": "zovo-usd-viewer",
+  "displayName": "USD Viewer: USDA, USDC, USDZ",
+  "description": "USD viewer for VS Code: open USDA, USDC and USDZ files with a prim tree, attribute details, binary USDC shown as readable USDA text and a 3D preview of the meshes. Follows references, payloads and variants. Offline, no tools to install.",
+  "version": "0.1.0",
+  "publisher": "zovo",
+  "license": "MIT",
+  "icon": "icon.png",
+  "galleryBanner": {
+    "color": "#1B2430",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theluckystrike/usd-viewer-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/theluckystrike/usd-viewer-vscode/issues"
+  },
+  "homepage": "https://github.com/theluckystrike/usd-viewer-vscode#readme",
+  "engines": {
+    "vscode": "^1.75.0"
+  },
+  "categories": [
+    "Visualization",
+    "Programming Languages",
+    "Other"
+  ],
+  "keywords": [
+    "usd",
+    "usdz",
+    "openusd",
+    "3d",
+    "pixar usd"
+  ],
+  "main": "./src/extension.js",
+  "activationEvents": [],
+  "capabilities": {
+    "untrustedWorkspaces": {
+      "supported": true
+    },
+    "virtualWorkspaces": true
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "usda",
+        "aliases": [
+          "USDA",
+          "USD text"
+        ],
+        "extensions": [
+          ".usda"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "usda",
+        "scopeName": "source.usda",
+        "path": "./syntaxes/usda.tmLanguage.json"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "usdViewer.editor",
+        "displayName": "USD Viewer (USDC, USDZ, USD)",
+        "selector": [
+          {
+            "filenamePattern": "*.usdc"
+          },
+          {
+            "filenamePattern": "*.usdz"
+          },
+          {
+            "filenamePattern": "*.usd"
+          }
+        ],
+        "priority": "default"
+      },
+      {
+        "viewType": "usdViewer.usdaPreview",
+        "displayName": "USD Viewer (USDA preview)",
+        "selector": [
+          {
+            "filenamePattern": "*.usda"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "commands": [
+      {
+        "command": "usdViewer.openWithViewer",
+        "title": "Open in USD Viewer",
+        "category": "USD Viewer",
+        "icon": "$(preview)"
+      },
+      {
+        "command": "usdViewer.showText",
+        "title": "Show as USDA Text",
+        "category": "USD Viewer",
+        "icon": "$(file-code)"
+      },
+      {
+        "command": "usdViewer.openSample",
+        "title": "Open the Sample Scene (USDA)",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.openUsdzSample",
+        "title": "Open the Sample Package (USDZ)",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.openWalkthrough",
+        "title": "Get Started",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.moreViewers",
+        "title": "More free tools by Zovo",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.supportDeveloper",
+        "title": "Support the developer",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.convert",
+        "title": "Convert and Export (Pro)",
+        "category": "USD Viewer",
+        "icon": "$(export)"
+      },
+      {
+        "command": "usdViewer.check",
+        "title": "Stage Check (Pro)",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.compare",
+        "title": "Compare Two USD Files (Pro)",
+        "category": "USD Viewer"
+      },
+      {
+        "command": "usdViewer.zovoPro.convert",
+        "title": "Zovo Pro: Convert and export"
+      },
+      {
+        "command": "usdViewer.zovoPro.check",
+        "title": "Zovo Pro: Stage check"
+      },
+      {
+        "command": "usdViewer.zovoPro.compare",
+        "title": "Zovo Pro: Compare two USD files"
+      },
+      {
+        "command": "usdViewer.getPro",
+        "title": "Get Zovo Pro (USD 19 once, all 22 Zovo extensions)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "usdViewer.payWithPayPal",
+        "title": "Pay for Zovo Pro with PayPal (USD 19, team of 5 USD 59)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "usdViewer.unlockWithSponsors",
+        "title": "I already paid: unlock with GitHub Sponsors",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "usdViewer.enterLicenseKey",
+        "title": "Enter Zovo Pro license key",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "usdViewer.removeLicense",
+        "title": "Remove Zovo Pro from this editor",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "usdViewer.payByCard",
+        "title": "Pay for Zovo Pro by card (USD 19)",
+        "category": "Zovo Pro"
+      },
+      {
+        "command": "usdViewer.enterKey",
+        "title": "Enter a key",
+        "category": "Zovo Pro"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "usdViewer.openWithViewer",
+          "when": "resourceExtname == .usda && activeEditor == 'workbench.editors.files.textFileEditor'",
+          "group": "navigation@9"
+        },
+        {
+          "command": "usdViewer.convert",
+          "when": "(activeCustomEditorId == 'usdViewer.editor' || activeCustomEditorId == 'usdViewer.usdaPreview') && config.usdViewer.showProTools",
+          "group": "1_usd@1"
+        },
+        {
+          "command": "usdViewer.check",
+          "when": "(activeCustomEditorId == 'usdViewer.editor' || activeCustomEditorId == 'usdViewer.usdaPreview') && config.usdViewer.showProTools",
+          "group": "1_usd@2"
+        },
+        {
+          "command": "usdViewer.showText",
+          "when": "activeCustomEditorId == 'usdViewer.editor' || activeCustomEditorId == 'usdViewer.usdaPreview'",
+          "group": "1_usd@0"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "usdViewer.openWithViewer",
+          "when": "resourceExtname =~ /^\\.(usda|usdc|usd|usdz)$/i && !explorerResourceIsFolder",
+          "group": "navigation@9"
+        },
+        {
+          "command": "usdViewer.showText",
+          "when": "resourceExtname =~ /^\\.(usdc|usd|usdz)$/i && !explorerResourceIsFolder",
+          "group": "navigation@10"
+        },
+        {
+          "command": "usdViewer.zovoPro.convert",
+          "when": "resourceExtname =~ /^\\.(usda|usdc|usd|usdz)$/i && !explorerResourceIsFolder && config.usdViewer.showProTools",
+          "group": "zovoPro@1"
+        },
+        {
+          "command": "usdViewer.zovoPro.check",
+          "when": "resourceExtname =~ /^\\.(usda|usdc|usd|usdz)$/i && !explorerResourceIsFolder && config.usdViewer.showProTools",
+          "group": "zovoPro@2"
+        },
+        {
+          "command": "usdViewer.zovoPro.compare",
+          "when": "resourceExtname =~ /^\\.(usda|usdc|usd|usdz)$/i && !explorerResourceIsFolder && config.usdViewer.showProTools",
+          "group": "zovoPro@3"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "usdViewer.convert",
+          "when": "config.usdViewer.showProTools"
+        },
+        {
+          "command": "usdViewer.check",
+          "when": "config.usdViewer.showProTools"
+        },
+        {
+          "command": "usdViewer.compare",
+          "when": "config.usdViewer.showProTools"
+        },
+        {
+          "command": "usdViewer.zovoPro.convert",
+          "when": "false"
+        },
+        {
+          "command": "usdViewer.zovoPro.check",
+          "when": "false"
+        },
+        {
+          "command": "usdViewer.zovoPro.compare",
+          "when": "false"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "USD Viewer",
+      "properties": {
+        "usdViewer.maxFileSizeMB": {
+          "type": "number",
+          "default": 512,
+          "minimum": 1,
+          "description": "Files larger than this open with a message instead of the stage, so VS Code stays responsive. Referenced layers together may use twice this."
+        },
+        "usdViewer.followReferences": {
+          "type": "boolean",
+          "default": true,
+          "description": "Open the sublayers, references and payloads a file names (from disk or from inside its USDZ package). Off: only the opened layer is shown."
+        },
+        "usdViewer.maxTriangles": {
+          "type": "number",
+          "default": 3000000,
+          "minimum": 1000,
+          "description": "The 3D view draws at most this many triangles. The tree and the details always show the whole stage."
+        },
+        "usdViewer.textMaxArray": {
+          "type": "number",
+          "default": 20000,
+          "minimum": 100,
+          "description": "In the read-only USDA text view, arrays longer than this are shortened. The Pro converter always writes every value."
+        },
+        "usdViewer.showProTools": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the Zovo Pro tools (convert and export, stage check, compare) in the Command Palette, the Explorer menu and the viewer toolbar. Everything free stays visible."
+        },
+        "usdViewer.askForRating": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask once for a Marketplace rating after USD files opened without an error on two occasions at least 30 minutes apart. \"Later\" asks one more time after 7 days, \"No thanks\" never asks again. Nothing is sent anywhere."
+        },
+        "usdViewer.showSupportLinks": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the small Rate, More free tools and Zovo Pro links at the bottom of the viewer. Nothing is sent anywhere."
+        }
+      }
+    },
+    "walkthroughs": [
+      {
+        "id": "usdViewer.start",
+        "title": "Get started with the USD Viewer",
+        "description": "Open USDA, USDC and USDZ files in VS Code.",
+        "steps": [
+          {
+            "id": "open",
+            "title": "Open a USD file",
+            "description": "Click any .usdc, .usdz or .usd file. It opens with the prim tree on the left, the 3D view in the middle and the details of the selected prim on the right. For .usda text files, use the preview button in the editor title.\n[Open the sample scene](command:usdViewer.openSample)",
+            "media": {
+              "image": "images/screenshot.png",
+              "altText": "A USD scene open in VS Code with the prim tree, the 3D view and the prim details."
+            },
+            "completionEvents": [
+              "onCommand:usdViewer.openSample"
+            ]
+          },
+          {
+            "id": "inspect",
+            "title": "Read the stage",
+            "description": "Drag to orbit, right-drag to pan, wheel to zoom. Pick a prim in the tree to highlight it and see its attributes, references and variants. USDA text shows a binary layer as readable text.\n[Open the sample USDZ package](command:usdViewer.openUsdzSample)",
+            "media": {
+              "markdown": "walkthrough/inspect.md"
+            },
+            "completionEvents": [
+              "onCommand:usdViewer.openUsdzSample"
+            ]
+          },
+          {
+            "id": "zovo-related",
+            "title": "Tools that often go with USD files",
+            "description": "If your project also has glTF, OBJ or FBX models, or textures, these free Zovo extensions open them. A link opens the extension page, and you choose there whether to install it.\n[3D Model Viewer](command:extension.open?%5B%22zovo.3d-model-viewer%22%5D)\n[Image Editor](command:extension.open?%5B%22zovo.zovo-image-editor%22%5D)",
+            "media": {
+              "markdown": "walkthrough/related.md"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "test": "node scripts/test.js",
+    "package": "npx -y @vscode/vsce@3 package --no-dependencies"
+  },
+  "devDependencies": {},
+  "sponsor": {
+    "url": "https://github.com/sponsors/theluckystrike/sponsorships?tier_id=679878"
+  }
+}
